@@ -90,18 +90,15 @@ class VendorView(APIView):
     
     def get(self, request, pk=None, format=None):
         if pk:
-            # Retrieve a single Vendor by ID
             vendor = Vendor.objects.get(pk=pk)
             serializer = VendorSerializer(vendor)
             return Response(serializer.data)
         else:
-            # Retrieve all Vendors
             vendors = Vendor.objects.all()
             serializer = VendorSerializer(vendors, many=True)
             return Response(serializer.data)
     
     def post(self, request, format=None):
-        # Create a new Vendor
         serializer = VendorSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -109,7 +106,6 @@ class VendorView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):
-        # Update an existing Vendor
         vendor = Vendor.objects.get(pk=pk)
         serializer = VendorSerializer(vendor, data=request.data, partial=True)
         if serializer.is_valid():
@@ -119,15 +115,12 @@ class VendorView(APIView):
 
     def delete(self, request, pk, format=None):
         try:
-            # Attempt to find and delete the vendor
             vendor = Vendor.objects.get(pk=pk)
             vendor.delete()
             return Response(status=status.HTTP_204_NO_CONTENT, data={'message': 'Vendor deleted successfully'})
         except Vendor.DoesNotExist:
-            # If the vendor does not exist, return a 404 response
             return Response(status=status.HTTP_404_NOT_FOUND, data={'detail': 'Vendor not found'})
         except Exception as e:
-            # Catch any other exceptions and return a 500 response
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'detail': str(e)}) 
 
 class ProductCategoryView(generics.GenericAPIView):

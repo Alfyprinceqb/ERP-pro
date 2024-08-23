@@ -56,25 +56,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         else:
             self.set_password(self.password)
         super().save(*args, **kwargs)
-
-
-class Vendor(models.Model):
-    first_name = models.CharField(max_length=255)
-    middle_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255)
-    mobile = models.CharField(
-        max_length=10,
-        validators=[RegexValidator(regex=r'^\d{10}$', message="Enter a valid 10-digit mobile number")]
-    )
-    email = models.EmailField(unique=True)    
-    address = models.TextField(max_length=255, blank=True)    
-
-class Product_category(models.Model):
-    id = models.AutoField(primary_key=True)
-    product_id = models.CharField(max_length=255, unique=True) 
-    product_code = models.CharField(max_length=255)
-    barcode = models.CharField(max_length=255)
-    product_name = models.CharField(max_length=255)
-    product_description = models.TextField(max_length=255)
-    product_category = models.CharField(max_length=255)
-    reorder_quantity = models.IntegerField()    
