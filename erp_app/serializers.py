@@ -30,4 +30,9 @@ class VendorSerializer(serializers.ModelSerializer):
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Product_category
-        fields = '__all__'        
+        fields = '__all__'  
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'              
